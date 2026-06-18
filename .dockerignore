@@ -1,0 +1,9 @@
+node_modules
+uploads
+output
+.DS_Store
+*.pdf
+test-*
+*.png
+*.jpg
+*.docx

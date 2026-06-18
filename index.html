@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image to PDF — by Kirdunqt</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app" role="main">
+    <header class="app__header">
+      <h1 class="app__title">Image to PDF</h1>
+      <p class="app__brand">by Kirdunqt</p>
+    </header>
+
+    <!-- Tab Nav -->
+    <nav class="tab-nav" role="tablist" aria-label="Converter tabs">
+      <button type="button" class="tab-btn tab-btn--active" data-tab="image" role="tab" aria-selected="true" id="tab-image">
+        <span>&#128247;</span> Gambar → PDF
+      </button>
+      <button type="button" class="tab-btn" data-tab="word" role="tab" aria-selected="false" id="tab-word">
+        <span>&#128196;</span> Word → PDF
+      </button>
+    </nav>
+
+    <section class="tab-panel tab-panel--active" id="panel-image" role="tabpanel" aria-labelledby="tab-image">
+    <label class="upload" id="drop-area" aria-label="Upload area" tabindex="0">
+      <svg class="upload__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+        <polyline points="17 8 12 3 7 8"/>
+        <line x1="12" y1="3" x2="12" y2="15"/>
+      </svg>
+      <p class="upload__primary">Drag &amp; drop gambar di sini</p>
+      <p class="upload__secondary">atau klik untuk memilih file</p>
+      <input type="file" id="upload" accept="image/png,image/jpeg,image/webp" multiple hidden>
+    </label>
+
+    <section class="options" id="options" hidden>
+      <h2 class="options__title">Pengaturan</h2>
+      <div class="options__row">
+        <label class="field">
+          <span class="field__label">Ukuran Halaman</span>
+          <select id="page-size" class="field__control">
+            <option value="a4" selected>A4 (210 x 297 mm)</option>
+            <option value="letter">Letter (216 x 279 mm)</option>
+            <option value="legal">Legal (216 x 356 mm)</option>
+          </select>
+        </label>
+        <fieldset class="field field--radio">
+          <legend class="field__label">Orientasi</legend>
+          <label class="radio">
+            <input type="radio" name="orientation" value="portrait" checked>
+            <span>Portrait</span>
+          </label>
+          <label class="radio">
+            <input type="radio" name="orientation" value="landscape">
+            <span>Landscape</span>
+          </label>
+        </fieldset>
+      </div>
+    </section>
+
+    <section class="preview" id="preview" aria-live="polite" hidden>
+      <header class="preview__header">
+        <h2 class="preview__title">Pratinjau <span class="preview__count" id="preview-count">0</span></h2>
+        <div class="preview__actions">
+          <button type="button" class="btn btn--ghost" id="clear-btn">Hapus Semua</button>
+        </div>
+      </header>
+      <ul class="preview__grid" id="preview-list" role="list"></ul>
+    </section>
+
+    <section class="actions">
+      <button type="button" class="btn btn--primary" id="convert-btn" disabled>
+        Convert ke PDF
+      </button>
+    </section>
+
+    <p class="app__status" id="status" role="status" aria-live="polite"></p>
+    </section> <!-- End panel-image -->
+
+    <!-- Word → PDF Panel -->
+    <section class="tab-panel" id="panel-word" role="tabpanel" aria-labelledby="tab-word" hidden>
+      <label class="upload" id="word-drop-area" aria-label="Upload area" tabindex="0">
+        <svg class="upload__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <line x1="12" y1="18" x2="12" y2="12"/>
+          <line x1="9" y1="15" x2="15" y2="15"/>
+        </svg>
+        <p class="upload__primary">Drag &amp; drop file .docx di sini</p>
+        <p class="upload__secondary">atau klik untuk memilih file</p>
+        <input type="file" id="word-upload" accept=".docx" hidden>
+      </label>
+
+      <section class="word-info" id="word-info" hidden>
+        <div class="word-info__row">
+          <div class="word-info__icon">&#128196;</div>
+          <div class="word-info__meta">
+            <span class="word-info__name" id="word-name"></span>
+            <span class="word-info__size" id="word-size"></span>
+          </div>
+          <button type="button" class="icon-btn icon-btn--danger" id="word-remove" aria-label="Hapus">&times;</button>
+        </div>
+      </section>
+
+      <section class="options options--word" id="word-options" hidden>
+        <h2 class="options__title">Pengaturan</h2>
+        <div class="options__row">
+          <label class="field">
+            <span class="field__label">Ukuran Halaman</span>
+            <select id="word-page-size" class="field__control">
+              <option value="a4" selected>A4 (210 x 297 mm)</option>
+              <option value="letter">Letter (216 x 279 mm)</option>
+              <option value="legal">Legal (216 x 356 mm)</option>
+            </select>
+          </label>
+          <fieldset class="field field--radio">
+            <legend class="field__label">Orientasi</legend>
+            <label class="radio">
+              <input type="radio" name="word-orientation" value="portrait" checked>
+              <span>Portrait</span>
+            </label>
+            <label class="radio">
+              <input type="radio" name="word-orientation" value="landscape">
+              <span>Landscape</span>
+            </label>
+          </fieldset>
+        </div>
+      </section>
+
+      <section class="actions">
+        <button type="button" class="btn btn--primary" id="word-convert-btn" disabled>
+          Convert ke PDF
+        </button>
+      </section>
+
+      <p class="app__status" id="word-status" role="status" aria-live="polite"></p>
+    </section>
+  </main>
+
+  <template id="preview-item-template">
+    <li class="preview-item" draggable="true" data-id="__ID__">
+      <div class="preview-item__thumb"><img src="" alt=""></div>
+      <div class="preview-item__meta">
+        <span class="preview-item__name"></span>
+        <span class="preview-item__size"></span>
+      </div>
+      <div class="preview-item__controls">
+        <button type="button" class="icon-btn icon-btn--move" data-dir="-1" aria-label="Pindah ke atas">&#8593;</button>
+        <button type="button" class="icon-btn icon-btn--move" data-dir="1" aria-label="Pindah ke bawah">&#8595;</button>
+        <button type="button" class="icon-btn icon-btn--danger" data-action="remove" aria-label="Hapus">&times;</button>
+      </div>
+    </li>
+  </template>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

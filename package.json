@@ -1,0 +1,15 @@
+{
+  "name": "image-word-to-pdf",
+  "version": "1.0.0",
+  "description": "JPG to PDF (client-side via jsPDF) and Word/DOCX to PDF (server-side via LibreOffice Headless)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "adm-zip": "^0.5.17",
+    "express": "^4.19.2",
+    "multer": "^1.4.5-lts.1",
+    "playwright": "^1.61.0"
+  }
+}
