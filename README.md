@@ -2,7 +2,7 @@
 
 Aplikasi web untuk mengonversi gambar (JPG/PNG/WebP) dan dokumen Word (.docx) menjadi PDF. Dibangun dengan Node.js + Express, frontend vanilla JavaScript, dan LibreOffice Headless untuk konversi DOCX.
 
-**Live Demo:** [kirdun-pdfconverter-production.up.railway.app](kirdun-pdfconverter-production.up.railway.app) 
+**Live Demo:** [kirdun-pdfconverter-production.up.railway.app](https://kirdun-pdfconverter-production.up.railway.app/) 
 
 **Author:** Kirdunqt
 
